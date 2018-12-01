@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{/*{{if .Success}}*/}}
+{{/*<h1>Thanks for your message!</h1>*/}}
+{{/*{{else}}*/}}
+<h1>Crear usuario</h1>
+<form action="http://localhost:9000/user/save" method="POST">
+    <label>Nombre : </label><br/>
+    <input type="text" name="name"><br/>
+    <label>Email: </label><br/>
+    <input type="text" name="email"><br/>
+    <br/>
+    <input type="submit"  value="Crear">
+</form>
+<br>
+<h1>Guardar archivo</h1>
+<form action="http://localhost:9000/document/save" method="POST">
+    <br/>
+    <label for="avatar">Seleccione archivo :</label>
+
+    <input type="file"
+           id="file" name="file"
+    >
+    <br>
+    <br>
+    <input type="submit" value="Guardar">
+
+    <br>
+</form>
+<br>
+Usuarios registrados <br>
+<pre>{{.Table}}
+</pre>
+
+</body>
+</html>
