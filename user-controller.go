@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func userSave(writer http.ResponseWriter, req *http.Request) {
@@ -34,6 +35,24 @@ func userSave(writer http.ResponseWriter, req *http.Request) {
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
 
-func userDelete(writer http.ResponseWriter, r *http.Request) {
+func userDelete(writer http.ResponseWriter, req *http.Request) {
+	id := req.FormValue("id")
+	userID, err := strconv.Atoi(id)
+	if err != nil {
+		panic(err)
+	}
+	//Decode JSON
+	userJSON, err := json.Marshal(User{
+		ID: userID,
+	})
+	log.Print(userJSON)
 
+	//Decode JSON
+	var userNormal User
+	errDecoding := json.Unmarshal(userJSON, &userNormal)
+	if errDecoding != nil {
+		panic(errDecoding)
+	}
+	log.Print(userNormal.ID)
+	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
