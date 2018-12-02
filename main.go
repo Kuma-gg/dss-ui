@@ -26,11 +26,11 @@ const (
 )
 
 func main() {
-
 	//RabbitMq server
 	rabbitServer = "amqp://guest:guest@localhost:5672/"
 	storageRequestQueue = "storageRequestQueue"
 	//
+
 	router := mux.NewRouter()
 	router.HandleFunc("/", indexPage).Methods("GET")
 	router.HandleFunc("/user", userSave).Methods("POST")

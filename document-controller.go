@@ -50,6 +50,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 	}
 	// send queue  RabbitMQ
 	sendFileMessage(documentJSON)
+
 	//Decode JSON
 	var documentNormal DocumentFile
 	errDecoding := json.Unmarshal(documentJSON, &documentNormal)
@@ -71,12 +72,14 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 
 	documentJSON, err := json.Marshal(document)
+
 	if err != nil {
 		panic(err)
 	}
 	log.Print(documentJSON)
 	// Delete document
 	deleteDocument(document)
+
 	//Decode JSON
 	var documentNormal Document
 	errDecoding := json.Unmarshal(documentJSON, &documentNormal)
@@ -92,5 +95,4 @@ func getMD5Checksum(content []byte) string {
 	hasher.Write(content)
 	return hex.EncodeToString(hasher.Sum(nil))
 }
-
 

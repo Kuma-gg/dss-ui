@@ -45,5 +45,4 @@ func indexPage(writer http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
 }
