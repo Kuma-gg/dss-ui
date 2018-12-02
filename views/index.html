@@ -115,7 +115,7 @@
                         </div>
                         <div id="documents" class="col s12">
                             <div class="row">
-                                <form class="col s12 m3" action="http://localhost:9000/document/save" method="POST">
+                                <form class="col s12 m3" action="/document" method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <h5 class="col s12">Upload new document</h5>
                                         <div class="file-field input-field  col s12">
@@ -151,8 +151,11 @@
                                                     <td>{{.Name}}</td>
                                                     <td>{{.Size}}</td>
                                                     <td>
-                                                        <a href="/document/remove/{{.ID}}" class="waves-effect waves-light btn red"
-                                                            title="Remove document {{.Name}}"><i class="material-icons">delete</i></a>
+                                                        <form action="/document/delete" method="POST">
+                                                            <input type="hidden" name="id" value="{{.ID}}">
+                                                            <button type="submit" class="waves-effect waves-light btn red"
+                                                                title="Remove document {{.Name}}"><i class="material-icons">delete</i></button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                                 {{end}}

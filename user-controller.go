@@ -8,7 +8,7 @@ import (
 )
 
 func userSave(writer http.ResponseWriter, req *http.Request) {
-	//Decode JSON
+	//Encode JSON
 	userJSON, err := json.Marshal(User{
 		ID:        1,
 		Name:      req.FormValue("name"),
@@ -41,7 +41,7 @@ func userDelete(writer http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	//Decode JSON
+	//Encode JSON
 	userJSON, err := json.Marshal(User{
 		ID: userID,
 	})
