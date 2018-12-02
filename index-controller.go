@@ -22,7 +22,7 @@ func indexPage(writer http.ResponseWriter, r *http.Request) {
 	}
 
 	data := WebData{
-		Title: "Users",
+		Title: "Kuma | Mastery",
 		Users: []User{
 			{ID: 1, Name: "Lolpez", Firstname: "Luis", Lastname: "Lopez", Age: 25, Email: "luis@gmail.com"},
 			{ID: 2, Name: "Miguel", Firstname: "Miguel", Lastname: "Lopez", Age: 25, Email: "miguel@gmail.com"},

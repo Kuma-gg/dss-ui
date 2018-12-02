@@ -40,56 +40,93 @@
         <li><a class="subheader"></a></li>
     </ul>
     <div class="container">
-        <div class="row">
-            <div class="s12">
-                <h1>Crear usuario</h1>
-                <form action="http://localhost:9000/user/save" method="POST">
-                    <label>Nombre : </label><br />
-                    <input type="text" name="name"><br />
-                    <label>Email: </label><br />
-                    <input type="text" name="email"><br />
-                    <br />
-                    <input type="submit" value="Crear">
-                </form>
-                <br>
-                <h1>Guardar archivo</h1>
-                <form action="http://localhost:9000/document/save" method="POST">
-                    <br />
-                    <label for="avatar">Seleccione archivo :</label>
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="s12">
+                        <ul id="tabs" class="tabs tabs-transparent">
+                            <li class="tab col s6"><a class="active" href="#users">Users</a></li>
+                            <li class="tab col s6"><a href="#documents">Documents</a></li>
+                        </ul>
+                        <div id="users" class="col s12">
+                            <div class="row">
+                                <form class="col s12 m3" action="http://localhost:9000/user/save" method="POST">
+                                    <div class="row">
+                                        <h5 class="col s12">Create new user</h5>
+                                        <div class="input-field col s12">
+                                            <input id="name" type="text" class="validate" required>
+                                            <label for="name" class="white-text">User Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="first_name" type="text" class="validate" required>
+                                            <label for="first_name" class="white-text">First Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="last_name" type="text" class="validate" required>
+                                            <label for="last_name" class="white-text">Last Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="email" type="email" class="validate" required>
+                                            <label for="email" class="white-text">Email</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="submit" type="submit" class="waves-effect waves-light btn">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col s12 m9">
+                                    <h5 class="col s12">Users</h5>
+                                    <div class="col s12">
+                                        <table class="highlight">
+                                            <thead>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{range .Users}}
+                                                <tr>
+                                                    <td>{{.Name}}</td>
+                                                    <td>{{.Firstname}}</td>
+                                                    <td>{{.Lastname}}</td>
+                                                    <td>{{.Email}}</td>
+                                                    <td>
+                                                        <a href="/document/remove/123" class="waves-effect waves-light btn red"
+                                                            title="Remove document"><i class="material-icons">delete</i></a>
+                                                    </td>
+                                                </tr>
+                                                {{end}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="documents" class="col s12">
+                            <h1>Guardar archivo</h1>
+                            <form action="http://localhost:9000/document/save" method="POST">
+                                <br />
+                                <label for="avatar">Seleccione archivo :</label>
 
-                    <input type="file" id="file" name="file">
-                    <br>
-                    <br>
-                    <input type="submit" value="Guardar">
+                                <input type="file" id="file" name="file">
+                                <br>
+                                <br>
+                                <input type="submit" value="Guardar">
 
-                    <br>
-                </form>
-                <br>
-                Usuarios registrados <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User Name</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{range .Users}}
-                        <tr>
-                            <td>{{.Name}}</td>
-                            <td>{{.Firstname}}</td>
-                            <td>{{.Lastname}}</td>
-                            <td>{{.Email}}</td>
-                            <td>Eliminar</td>
-                        </tr>
-                        {{end}}
-                    </tbody>
-                </table>
+                                <br>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <br>
+
     </div>
 
 
