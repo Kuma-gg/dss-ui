@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"io"
 	"log"
@@ -10,6 +12,7 @@ import (
 
 func documentSave(writer http.ResponseWriter, req *http.Request) {
 	type DocumentFile struct {
+		ID       string
 		Filename string
 		Bytes    []byte
 		Size     int64
@@ -26,8 +29,11 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 	if _, err := io.Copy(buf, file); err != nil {
 		panic(err)
 	}
+
+	ID := getMD5Checksum(buf.Bytes())
 	//Encode JSON
 	documentJSON, err := json.Marshal(DocumentFile{
+		ID:       ID,
 		Filename: handler.Filename,
 		Bytes:    buf.Bytes(),
 		Size:     handler.Size,
@@ -44,6 +50,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 		panic(errDecoding)
 	}
 	log.Print(documentNormal.Bytes)
+	log.Print(documentNormal.ID)
 	log.Print(documentNormal.Filename)
 	log.Print(documentNormal.Size)
 
@@ -68,4 +75,10 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 	log.Print(documentNormal.ID)
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
+}
+
+func getMD5Checksum(content []byte) string {
+	hasher := md5.New()
+	hasher.Write(content)
+	return hex.EncodeToString(hasher.Sum(nil))
 }
