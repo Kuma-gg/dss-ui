@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="/css/style.css" media="screen,projection">
+</head>
+
+<body class="grey lighten-2">
+    {{/*{{if .Success}}*/}}
+    {{/*<h1>Thanks for your message!</h1>*/}}
+    {{/*{{else}}*/}}
+    <div class="navbar-fixed">
+        <nav class="teal darken-4">
+            <div class="container">
+                <div class="nav-wrapper"><a class="brand-logo" href="/"><i class="material-icons">home</i>Kuma GG</a><a
+                        class="sidenav-trigger" href="#" data-target="mobile-nav"><i class="material-icons">menu</i></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <ul class="sidenav" id="mobile-nav">
+        <li></li>
+        <div class="user-view">
+            <div class="background teal darken-4"></div><a href="#user"><img class="circle" src="/img/KumaDab.png"></a><a
+                href="https://github.com/Kuma-gg" target="_blank"><span class="white-text name">Kuma GG</span></a><a
+                href="https://github.com/Kuma-gg/dss-ui" target="_blank"><span class="white-text email">Github project</span></a>
+        </div>
+        <li><a href="https://github.com/Kuma-gg/dss-ui" target="_blank"><i class="material-icons left">book</i>DSS UI
+                project</a></li>
+        <li><a href="https://github.com/Kuma-gg/dss-email" target="_blank"><i class="material-icons left">book</i>DSS
+                Email project</a></li>
+        <li><a href="https://github.com/Kuma-gg/dss-storage" target="_blank"><i class="material-icons left">book</i>DSS
+                Storage project</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader"></a></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="s12">
+                <h1>Crear usuario</h1>
+                <form action="http://localhost:9000/user/save" method="POST">
+                    <label>Nombre : </label><br />
+                    <input type="text" name="name"><br />
+                    <label>Email: </label><br />
+                    <input type="text" name="email"><br />
+                    <br />
+                    <input type="submit" value="Crear">
+                </form>
+                <br>
+                <h1>Guardar archivo</h1>
+                <form action="http://localhost:9000/document/save" method="POST">
+                    <br />
+                    <label for="avatar">Seleccione archivo :</label>
+
+                    <input type="file" id="file" name="file">
+                    <br>
+                    <br>
+                    <input type="submit" value="Guardar">
+
+                    <br>
+                </form>
+                <br>
+                Usuarios registrados <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Users}}
+                        <tr>
+                            <td>{{.Name}}</td>
+                            <td>{{.Firstname}}</td>
+                            <td>{{.Lastname}}</td>
+                            <td>{{.Email}}</td>
+                            <td>Eliminar</td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/script.js"></script>
+
+</html>

@@ -8,12 +8,13 @@ import (
 	"net/http"
 	"strconv"
 )
+
 type WebData struct {
 	Table string
 }
 
 type UerData struct {
-	id string
+	id   string
 	name string
 }
 
@@ -38,7 +39,7 @@ func userForm(writer http.ResponseWriter, r *http.Request) {
 
 }
 
-func getUsers()  string{
+func getUsers() string {
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
@@ -52,7 +53,7 @@ func getUsers()  string{
 		panic(err)
 	}
 	defer rows.Close()
-	tableHtml :=""
+	tableHtml := ""
 	//tableHtml :=" <table style='width:100%'><tr><th>id</th> <th>name</th> </tr> "
 	for rows.Next() {
 		//tableHtml += "<tr>"
@@ -65,7 +66,7 @@ func getUsers()  string{
 			panic(err)
 		}
 		//jjjjjj = append(jjjjjj,string(id))
-		tableHtml += " id : "+strconv.Itoa(id)+ "  email : "+firstName+" \n"
+		tableHtml += " id : " + strconv.Itoa(id) + "  email : " + firstName + " \n"
 		//tableHtml += fmt.Sprintf("<th> %s </th> <th> %s </th>",id,firstName)
 		fmt.Println(id, firstName)
 		//tableHtml += "</tr>"
@@ -88,7 +89,7 @@ func saveUser(writer http.ResponseWriter, request *http.Request) {
 	email := request.FormValue("email")
 
 	sqlStatement := fmt.Sprintf(`  INSERT INTO users (age, name,email, first_name, last_name)
-						VALUES (30, 'Jonathan', '%s', 'Jonathan', 'Calhoun')`,email)
+						VALUES (30, 'Jonathan', '%s', 'Jonathan', 'Calhoun')`, email)
 	_, err = db.Exec(sqlStatement)
 	if err != nil {
 		panic(err)
