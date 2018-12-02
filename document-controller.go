@@ -47,7 +47,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 	log.Print(documentNormal.Filename)
 	log.Print(documentNormal.Size)
 
-	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
+	http.Redirect(writer, req, "/#documents", http.StatusMovedPermanently)
 }
 
 func documentDelete(writer http.ResponseWriter, req *http.Request) {

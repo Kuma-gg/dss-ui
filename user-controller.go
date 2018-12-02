@@ -32,7 +32,7 @@ func userSave(writer http.ResponseWriter, req *http.Request) {
 	log.Print(userNormal.Firstname)
 	log.Print(userNormal.Lastname)
 	log.Print(userNormal.Email)
-	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
+	http.Redirect(writer, req, "/#users", http.StatusMovedPermanently)
 }
 
 func userDelete(writer http.ResponseWriter, req *http.Request) {
