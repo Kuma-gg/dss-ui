@@ -96,7 +96,7 @@
                                                     <td>{{.Email}}</td>
                                                     <td>
                                                         <a href="/document/remove/123" class="waves-effect waves-light btn red"
-                                                            title="Remove document"><i class="material-icons">delete</i></a>
+                                                            title="Remove user {{.Name}}"><i class="material-icons">delete</i></a>
                                                     </td>
                                                 </tr>
                                                 {{end}}
@@ -138,7 +138,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {{range .Documents}}
+                                                <tr>
+                                                    <td>{{.ID}}</td>
+                                                    <td>{{.Name}}</td>
+                                                    <td>{{.Size}}</td>
+                                                    <td>
+                                                        <a href="/document/remove/{{.ID}}" class="waves-effect waves-light btn red"
+                                                            title="Remove document {{.Name}}"><i class="material-icons">delete</i></a>
+                                                    </td>
+                                                </tr>
+                                                {{end}}
                                             </tbody>
                                         </table>
                                     </div>
