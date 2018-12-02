@@ -50,23 +50,27 @@
                         </ul>
                         <div id="users" class="col s12">
                             <div class="row">
-                                <form class="col s12 m3" action="http://localhost:9000/user/save" method="POST">
+                                <form class="col s12 m3" action="/user" method="POST">
                                     <div class="row">
                                         <h5 class="col s12">Create new user</h5>
                                         <div class="input-field col s12">
-                                            <input id="name" type="text" class="validate" required>
+                                            <input id="name" name="name" type="text" class="validate white-text"
+                                                required>
                                             <label for="name" class="white-text">User Name</label>
                                         </div>
                                         <div class="input-field col s12">
-                                            <input id="first_name" type="text" class="validate" required>
+                                            <input id="first_name" name="first_name" type="text" class="validate white-text"
+                                                required>
                                             <label for="first_name" class="white-text">First Name</label>
                                         </div>
                                         <div class="input-field col s12">
-                                            <input id="last_name" type="text" class="validate" required>
+                                            <input id="last_name" name="last_name" type="text" class="validate white-text"
+                                                required>
                                             <label for="last_name" class="white-text">Last Name</label>
                                         </div>
                                         <div class="input-field col s12">
-                                            <input id="email" type="email" class="validate" required>
+                                            <input id="email" name="email" type="email" class="validate white-text"
+                                                required value="luis@gmail.com">
                                             <label for="email" class="white-text">Email</label>
                                         </div>
                                         <div class="input-field col s12">

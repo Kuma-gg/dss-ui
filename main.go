@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//ContactDetails struct
 type ContactDetails struct {
 	Email   string
 	Subject string
@@ -16,9 +17,11 @@ type ContactDetails struct {
 
 func main() {
 	router := mux.NewRouter()
-	/*router.HandleFunc("/user/save", saveUser).Methods("POST")
-	router.HandleFunc("/index", userForm).Methods("GET")*/
 	router.HandleFunc("/", indexPage).Methods("GET")
+	router.HandleFunc("/user", userSave).Methods("POST")
+	router.HandleFunc("/user", userDelete).Methods("DELETE")
+	router.HandleFunc("/document", documentSave).Methods("POST")
+	router.HandleFunc("/document", documentDelete).Methods("DELETE")
 
 	fs := http.FileServer(http.Dir("./public"))
 	router.PathPrefix("/js/").Handler(fs)

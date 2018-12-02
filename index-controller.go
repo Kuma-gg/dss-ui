@@ -11,7 +11,6 @@ type User struct {
 	Name      string
 	Firstname string
 	Lastname  string
-	Age       int
 	Email     string
 }
 
@@ -29,12 +28,13 @@ func indexPage(writer http.ResponseWriter, r *http.Request) {
 		Documents []Document
 	}
 
+	//FAKE DATA
 	data := WebData{
 		Title: "Kuma | Mastery",
 		Users: []User{
-			{ID: 1, Name: "Lolpez", Firstname: "Luis", Lastname: "Lopez", Age: 25, Email: "luis@gmail.com"},
-			{ID: 2, Name: "Miguel", Firstname: "Miguel", Lastname: "Lopez", Age: 25, Email: "miguel@gmail.com"},
-			{ID: 3, Name: "Jose", Firstname: "Jose", Lastname: "Lopez", Age: 25, Email: "jose@gmail.com"},
+			{ID: 1, Name: "Lolpez", Firstname: "Luis", Lastname: "Lopez", Email: "luis@gmail.com"},
+			{ID: 2, Name: "Miguel", Firstname: "Miguel", Lastname: "Lopez", Email: "miguel@gmail.com"},
+			{ID: 3, Name: "Jose", Firstname: "Jose", Lastname: "Lopez", Email: "jose@gmail.com"},
 		},
 		Documents: []Document{
 			{ID: "abc123", Name: "abc.txt", Size: 50471},
