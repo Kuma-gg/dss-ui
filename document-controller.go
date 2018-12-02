@@ -26,16 +26,26 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 	if _, err := io.Copy(buf, file); err != nil {
 		panic(err)
 	}
-
+	//Encode JSON
 	documentJSON, err := json.Marshal(DocumentFile{
-		Filename: "gg",
+		Filename: handler.Filename,
 		Bytes:    buf.Bytes(),
-		Size:     123,
+		Size:     handler.Size,
 	})
 	if err != nil {
 		panic(err)
 	}
 	log.Print(documentJSON)
+
+	//Decode JSON
+	var documentNormal DocumentFile
+	errDecoding := json.Unmarshal(documentJSON, &documentNormal)
+	if errDecoding != nil {
+		panic(errDecoding)
+	}
+	log.Print(documentNormal.Bytes)
+	log.Print(documentNormal.Filename)
+	log.Print(documentNormal.Size)
 
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
