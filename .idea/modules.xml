@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/dss-ui.iml" filepath="$PROJECT_DIR$/.idea/dss-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dss-ui-ui-example.iml" filepath="$PROJECT_DIR$/.idea/dss-ui-ui-example.iml" />
     </modules>
   </component>
 </project>
