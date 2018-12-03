@@ -1,11 +1,17 @@
 package main
 
 import (
-	"io/ioutil"
-	"log"
+	"encoding/json"
 	"github.com/streadway/amqp"
+	"log"
 )
-func receiverFileMessage(){
+
+type ConfirmationQueue struct {
+	Type    string
+	Message string
+}
+
+func receiverFileMessage() {
 	conn, err := amqp.Dial(rabbitServer)
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -15,12 +21,12 @@ func receiverFileMessage(){
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		storageRequestQueue, // name
-		true,    // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
-		nil,     // arguments
+		storageResponseQueue, // name
+		true,                 // durable
+		false,                // delete when unused
+		false,                // exclusive
+		false,                // no-wait
+		nil,                  // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 
@@ -37,12 +43,12 @@ func receiverFileMessage(){
 
 	go func() {
 		for d := range msgs {
-			//log.Printf("Received a message %s",d.Body)
-			err := ioutil.WriteFile(d.MessageId, d.Body, 777)
-
-			if err != nil {
-				// handle error
+			var confirmation ConfirmationQueue
+			errDecoding := json.Unmarshal(d.Body, &confirmation)
+			if errDecoding != nil {
+				panic(errDecoding)
 			}
+			log.Println(confirmation.Type + " : " + confirmation.Message)
 			d.Ack(false)
 		}
 	}()
@@ -51,4 +57,3 @@ func receiverFileMessage(){
 	forever := make(chan bool)
 	<-forever
 }
-

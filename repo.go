@@ -25,7 +25,7 @@ func getUsers() []User {
 		var lastName string
 		var email string
 		var nameUser string
-		err = rows.Scan(&id, &email,&firstName,&lastName,&nameUser)
+		err = rows.Scan(&id, &email, &firstName, &lastName, &nameUser)
 		if err != nil {
 			// handle this error
 			panic(err)
@@ -60,7 +60,7 @@ func getDocuments() []Document {
 		var id string
 		var name string
 		var size int64
-		err = rows.Scan(&id,&name,&size)
+		err = rows.Scan(&id, &name, &size)
 		if err != nil {
 			// handle this error
 			panic(err)
@@ -72,6 +72,7 @@ func getDocuments() []Document {
 		fmt.Println(id, name)
 
 	}
+	db.Close()
 	err = rows.Err()
 	if err != nil {
 		panic(err)
@@ -79,14 +80,14 @@ func getDocuments() []Document {
 	return arrayDocument
 }
 
-func saveUser(user User)  bool{
+func saveUser(user User) bool {
 	//keys := mux.Vars(request)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
 	sqlStatement := fmt.Sprintf(`  INSERT INTO users ( name,email, first_name, last_name)
-						VALUES ( '%s', '%s', '%sn', '%s')`, user.Name,user.Email,user.Firstname,user.Lastname)
+						VALUES ( '%s', '%s', '%sn', '%s')`, user.Name, user.Email, user.Firstname, user.Lastname)
 	_, err = db.Exec(sqlStatement)
 	db.Close()
 	if err != nil {
@@ -95,7 +96,7 @@ func saveUser(user User)  bool{
 	return true
 }
 
-func deleteUser(user User)  bool{
+func deleteUser(user User) bool {
 	//keys := mux.Vars(request)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
@@ -111,13 +112,13 @@ func deleteUser(user User)  bool{
 	return true
 }
 
-func saveDocument(document Document)  bool{
+func saveDocument(document Document) bool {
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
 	sqlStatement := fmt.Sprintf(`  INSERT INTO documents ( name,size)
-						VALUES ( '%s', %s)`, document.Name,strconv.FormatInt(document.Size,10))
+						VALUES ( '%s', %s)`, document.Name, strconv.FormatInt(document.Size, 10))
 	_, err = db.Exec(sqlStatement)
 	db.Close()
 	if err != nil {
@@ -127,7 +128,7 @@ func saveDocument(document Document)  bool{
 	return true
 }
 
-func deleteDocument(document Document)  bool{
+func deleteDocument(document Document) bool {
 	//keys := mux.Vars(request)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
@@ -141,4 +142,37 @@ func deleteDocument(document Document)  bool{
 		return false
 	}
 	return true
+}
+
+func getUserById(id string) Document {
+	var user Document
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	query  := "SELECT id, name,size FROM documents where id = '" + id+"'"
+	rows, err := db.Query(query)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var id string
+		var name string
+		var size int64
+		err = rows.Scan(&id, &name, &size)
+		if err != nil {
+			// handle this error
+			panic(err)
+		}
+		user = Document{
+			ID: id, Name: name, Size: size,
+		}
+	}
+	db.Close()
+	err = rows.Err()
+	if err != nil {
+		panic(err)
+	}
+	return user
 }

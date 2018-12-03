@@ -35,7 +35,7 @@ func sendFileMessage(dataFile []byte) {
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
-			ContentType: "multipart/form-data",
+			ContentType: "application/json",
 			Body:        dataFile,
 		})
 	failOnError(err, "Failed to publish a message")

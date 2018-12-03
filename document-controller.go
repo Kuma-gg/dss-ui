@@ -10,13 +10,15 @@ import (
 	"net/http"
 )
 
+type DocumentFile struct {
+	ID       string
+	Filename string
+	Bytes    []byte
+	Size     int64
+	Type     string
+}
+
 func documentSave(writer http.ResponseWriter, req *http.Request) {
-	type DocumentFile struct {
-		ID       string
-		Filename string
-		Bytes    []byte
-		Size     int64
-	}
 
 	req.ParseMultipartForm(32 << 20)
 	file, handler, err := req.FormFile("file")
@@ -37,6 +39,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 		Filename: handler.Filename,
 		Bytes:    buf.Bytes(),
 		Size:     handler.Size,
+		Type:     "create",
 	})
 	if err != nil {
 		panic(err)
@@ -44,13 +47,12 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 	log.Print(documentJSON)
 	// save Document
-	saved := saveDocument(Document{Name:handler.Filename,Size:handler.Size})
+	saved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
 	if !saved {
 		log.Println("ERROR : create document")
 	}
 	// send queue  RabbitMQ
 	sendFileMessage(documentJSON)
-
 	//Decode JSON
 	var documentNormal DocumentFile
 	errDecoding := json.Unmarshal(documentJSON, &documentNormal)
@@ -67,8 +69,9 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	//Encode JSON
+	id :=req.FormValue("id")
 	document := Document{
-		ID: req.FormValue("id"),
+		ID: id,
 	}
 
 	documentJSON, err := json.Marshal(document)
@@ -77,6 +80,18 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 	log.Print(documentJSON)
+	// send command Rabbit
+	user:=getUserById(id)
+	comand, err := json.Marshal(DocumentFile{
+		ID: id  ,
+		Filename:user.Name,
+		Type: "delete",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+	sendFileMessage(comand)
 	// Delete document
 	deleteDocument(document)
 
@@ -95,4 +110,3 @@ func getMD5Checksum(content []byte) string {
 	hasher.Write(content)
 	return hex.EncodeToString(hasher.Sum(nil))
 }
-
