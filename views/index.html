@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="/css/style.css" media="screen,projection">
+</head>
+
+<body class="grey lighten-2">
+    {{/*{{if .Success}}*/}}
+    {{/*<h1>Thanks for your message!</h1>*/}}
+    {{/*{{else}}*/}}
+    <div class="navbar-fixed">
+        <nav class="teal darken-4">
+            <div class="container">
+                <div class="nav-wrapper"><a class="brand-logo" href="/"><i class="material-icons">home</i>Kuma GG</a><a
+                        class="sidenav-trigger" href="#" data-target="mobile-nav"><i class="material-icons">menu</i></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <ul class="sidenav" id="mobile-nav">
+        <li></li>
+        <div class="user-view">
+            <div class="background teal darken-4"></div><a href="#user"><img class="circle" src="/img/KumaDab.png"></a><a
+                href="https://github.com/Kuma-gg" target="_blank"><span class="white-text name">Kuma GG</span></a><a
+                href="https://github.com/Kuma-gg/dss-ui" target="_blank"><span class="white-text email">Github project</span></a>
+        </div>
+        <li><a href="https://github.com/Kuma-gg/dss-ui" target="_blank"><i class="material-icons left">book</i>DSS UI
+                project</a></li>
+        <li><a href="https://github.com/Kuma-gg/dss-email" target="_blank"><i class="material-icons left">book</i>DSS
+                Email project</a></li>
+        <li><a href="https://github.com/Kuma-gg/dss-storage" target="_blank"><i class="material-icons left">book</i>DSS
+                Storage project</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader"></a></li>
+    </ul>
+    <div class="container">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="s12">
+                        <ul id="tabs" class="tabs tabs-transparent">
+                            <li class="tab col s6"><a class="active" href="#users">Users</a></li>
+                            <li class="tab col s6"><a href="#documents">Documents</a></li>
+                        </ul>
+                        <div id="users" class="col s12">
+                            <div class="row">
+                                <form class="col s12 m3" action="/user" method="POST">
+                                    <div class="row">
+                                        <h5 class="col s12">Create new user</h5>
+                                        <div class="input-field col s12">
+                                            <input id="name" name="name" type="text" class="validate white-text"
+                                                required>
+                                            <label for="name" class="white-text">User Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="first_name" name="first_name" type="text" class="validate white-text"
+                                                required>
+                                            <label for="first_name" class="white-text">First Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="last_name" name="last_name" type="text" class="validate white-text"
+                                                required>
+                                            <label for="last_name" class="white-text">Last Name</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="email" name="email" type="email" class="validate white-text"
+                                                required value="luis@gmail.com">
+                                            <label for="email" class="white-text">Email</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input style="color:white" id="submit" type="submit" class="waves-effect waves-light btn">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col s12 m9">
+                                    <h5 class="col s12">Users</h5>
+                                    <div class="col s12">
+                                        <table class="highlight">
+                                            <thead>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{range .Users}}
+                                                <tr>
+                                                    <td>{{.Name}}</td>
+                                                    <td>{{.Firstname}}</td>
+                                                    <td>{{.Lastname}}</td>
+                                                    <td>{{.Email}}</td>
+                                                    <td>
+                                                        <form action="/user/delete" method="POST">
+                                                            <input type="hidden" name="id" value="{{.ID}}">
+                                                            <button type="submit" class="waves-effect waves-light btn red"
+                                                                title="Remove user {{.Name}}"><i class="material-icons">delete</i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                {{end}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="documents" class="col s12">
+                            <div class="row">
+                                <form class="col s12 m3" action="/document" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <h5 class="col s12">Upload new document</h5>
+                                        <div class="file-field input-field  col s12">
+                                            <div class="btn">
+                                                <span>Select File</span>
+                                                <input type="file" id="file" name="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate white-text" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input style="color:white" id="submit" type="submit" class="waves-effect waves-light btn">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col s12 m9">
+                                    <h5 class="col s12">Documets</h5>
+                                    <div class="col s12">
+                                        <table class="highlight">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>File Name</th>
+                                                    <th>File Size (Kb)</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{range .Documents}}
+                                                <tr>
+                                                    <td>{{.ID}}</td>
+                                                    <td>{{.Name}}</td>
+                                                    <td>{{.Size}}</td>
+                                                    <td>
+                                                        <form action="/document/delete" method="POST">
+                                                            <input type="hidden" name="id" value="{{.ID}}">
+                                                            <button type="submit" class="waves-effect waves-light btn red"
+                                                                title="Remove document {{.Name}}"><i class="material-icons">delete</i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                {{end}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/script.js"></script>
+
+</html>
