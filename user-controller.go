@@ -64,10 +64,10 @@ func userDelete(writer http.ResponseWriter, req *http.Request) {
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
 
-func notifyMail(w http.ResponseWriter, r *http.Request) {
+func notifyMail(writer http.ResponseWriter, req *http.Request) {
 	//obtener todos los mails en, los leemos del request en el post
 	var mails []Mail
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -77,4 +77,5 @@ func notifyMail(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(reqBodyBytes).Encode(mails)
 	//lo ponemos en la cola
 	sendEmailChannel(reqBodyBytes.Bytes()) // this is the []byte
+	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
