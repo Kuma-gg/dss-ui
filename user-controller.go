@@ -30,11 +30,7 @@ func userSave(writer http.ResponseWriter, req *http.Request) {
 	if errDecoding != nil {
 		panic(errDecoding)
 	}
-	log.Print(userNormal.ID)
-	log.Print(userNormal.Name)
-	log.Print(userNormal.Firstname)
-	log.Print(userNormal.Lastname)
-	log.Print(userNormal.Email)
+
 	http.Redirect(writer, req, "/#users", http.StatusMovedPermanently)
 }
 

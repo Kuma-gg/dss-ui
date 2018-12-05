@@ -34,7 +34,7 @@ func getUsers() []User {
 			ID: id, Name: nameUser, Firstname: firstName, Lastname: lastName, Email: email,
 		}
 		arrayUsers = append(arrayUsers, user)
-		fmt.Println(id, firstName)
+		//fmt.Println(id, firstName)
 
 	}
 	err = rows.Err()
@@ -69,7 +69,7 @@ func getDocuments() []Document {
 			ID: id, Name: name, Size: size,
 		}
 		arrayDocument = append(arrayDocument, user)
-		fmt.Println(id, name)
+		//fmt.Println(id, name)
 
 	}
 	db.Close()

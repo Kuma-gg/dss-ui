@@ -18,6 +18,7 @@ type DocumentFile struct {
 	Type     string
 }
 
+
 func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 	req.ParseMultipartForm(32 << 20)
@@ -45,25 +46,20 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 
-	log.Print(documentJSON)
+	//log.Print(documentJSON)
 	// save Document
 	saved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
 	if !saved {
 		log.Println("ERROR : create document")
 	}
 	// send queue  RabbitMQ
-	sendFileMessage(documentJSON)
+	sendFileStorageMessage(documentJSON)
 	//Decode JSON
 	var documentNormal DocumentFile
 	errDecoding := json.Unmarshal(documentJSON, &documentNormal)
 	if errDecoding != nil {
 		panic(errDecoding)
 	}
-	log.Print(documentNormal.Bytes)
-	log.Print(documentNormal.ID)
-	log.Print(documentNormal.Filename)
-	log.Print(documentNormal.Size)
-
 	http.Redirect(writer, req, "/#documents", http.StatusMovedPermanently)
 }
 
@@ -91,7 +87,7 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	sendFileMessage(comand)
+	sendFileStorageMessage(comand)
 	// Delete document
 	deleteDocument(document)
 
