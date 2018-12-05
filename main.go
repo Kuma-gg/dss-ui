@@ -25,7 +25,7 @@ var emailRequestQueue string
 // sql Parameters
 const (
 	host     = "localhost"
-	port     = "5674"
+	port     = "5432" //Default Postgresql port: 5432
 	user     = "postgres"
 	password = "123"
 	dbname   = "go_proyect_ui"
@@ -33,7 +33,7 @@ const (
 
 func main() {
 	//RabbitMq server
-	rabbitServer = "amqp://guest:guest@localhost:5674"
+	rabbitServer = "amqp://guest:guest@localhost:5672" //Default Rabbit port: 5672
 	storageRequestQueue = "storageRequestQueue"
 	storageResponseQueue = "storageResponseQueue"
 
