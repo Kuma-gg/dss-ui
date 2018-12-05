@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
@@ -45,7 +47,7 @@ func userDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 
 	//Del user by id
-	deleted:=deleteUser(user)
+	deleted := deleteUser(user)
 	if !deleted {
 		log.Print("ERROR : delete User")
 	}
@@ -60,4 +62,19 @@ func userDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 	log.Print(userNormal.ID)
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
+}
+
+func notifyMail(w http.ResponseWriter, r *http.Request) {
+	//obtener todos los mails en, los leemos del request en el post
+	var mails []Mail
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+	json.Unmarshal(body, &mails)
+	//obtenemos los parseamos y los convertimos a []bytes
+	reqBodyBytes := new(bytes.Buffer)
+	json.NewEncoder(reqBodyBytes).Encode(mails)
+	//lo ponemos en la cola
+	sendEmailChannel(reqBodyBytes.Bytes()) // this is the []byte
 }

@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-type DocumentFile struct {
+type DocumentFile struct { //expoted
 	ID       string
 	Filename string
 	Bytes    []byte
@@ -65,7 +65,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	//Encode JSON
-	id :=req.FormValue("id")
+	id := req.FormValue("id")
 	document := Document{
 		ID: id,
 	}
@@ -77,11 +77,11 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 	log.Print(documentJSON)
 	// send command Rabbit
-	user:=getUserById(id)
+	user := getUserById(id)
 	comand, err := json.Marshal(DocumentFile{
-		ID: id  ,
-		Filename:user.Name,
-		Type: "delete",
+		ID:       id,
+		Filename: user.Name,
+		Type:     "delete",
 	})
 
 	if err != nil {
