@@ -14,13 +14,17 @@ type ContactDetails struct {
 	Subject string
 	Message string
 }
+
 var rabbitServer string
 var storageRequestQueue string
 var storageResponseQueue string
+var mailRequestQueue string
+var mailResponseQueue string
+
 // sql Parameters
 const (
 	host     = "localhost"
-	port     = 5432
+	port     = "5674"
 	user     = "postgres"
 	password = "123"
 	dbname   = "go_proyect_ui"
@@ -28,9 +32,11 @@ const (
 
 func main() {
 	//RabbitMq server
-	rabbitServer = "amqp://guest:guest@localhost:5672/"
+	rabbitServer = "amqp://guest:guest@localhost:5674"
 	storageRequestQueue = "storageRequestQueue"
 	storageResponseQueue = "storageResponseQueue"
+	mailRequestQueue = "mailRequestQueue"
+	mailResponseQueue = "mailResponseQueue"
 	//
 	go receiverFileMessage()
 	router := mux.NewRouter()
@@ -39,6 +45,8 @@ func main() {
 	router.HandleFunc("/user/delete", userDelete).Methods("POST")
 	router.HandleFunc("/document", documentSave).Methods("POST")
 	router.HandleFunc("/document/delete", documentDelete).Methods("POST")
+	//mailinggggggg
+	router.HandleFunc("/mail", notifyMail).Methods("POST")
 
 	fs := http.FileServer(http.Dir("./public"))
 	router.PathPrefix("/js/").Handler(fs)

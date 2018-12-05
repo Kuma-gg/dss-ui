@@ -7,12 +7,12 @@ import (
 	"github.com/streadway/amqp"
 )
 
-type ConfirmationQueue struct {
+type MailConfirmationQueue struct {
 	Type    string
 	Message string
 }
 
-func receiverFileMessage() {
+func receiverMailMessage() {
 	conn, err := amqp.Dial(rabbitServer)
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
