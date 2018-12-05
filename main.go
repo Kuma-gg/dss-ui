@@ -14,9 +14,11 @@ type ContactDetails struct {
 	Subject string
 	Message string
 }
+
 var rabbitServer string
 var storageRequestQueue string
 var storageResponseQueue string
+
 // sql Parameters
 const (
 	host     = "localhost"
