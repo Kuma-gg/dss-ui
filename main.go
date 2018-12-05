@@ -18,8 +18,9 @@ type ContactDetails struct {
 var rabbitServer string
 var storageRequestQueue string
 var storageResponseQueue string
-var mailRequestQueue string
-var mailResponseQueue string
+
+var emailResponseQueue string
+var emailRequestQueue string
 
 // sql Parameters
 const (
@@ -35,10 +36,15 @@ func main() {
 	rabbitServer = "amqp://guest:guest@localhost:5674"
 	storageRequestQueue = "storageRequestQueue"
 	storageResponseQueue = "storageResponseQueue"
-	mailRequestQueue = "mailRequestQueue"
-	mailResponseQueue = "mailResponseQueue"
+
+	//email
+	emailResponseQueue = "emailResponseQueue"
+	emailRequestQueue = "emailRequestQueue"
+
 	//
-	go receiverFileMessage()
+	go receiverFileMessageStorage()
+	go receiverEmailMessage()
+
 	router := mux.NewRouter()
 	router.HandleFunc("/", indexPage).Methods("GET")
 	router.HandleFunc("/user", userSave).Methods("POST")
