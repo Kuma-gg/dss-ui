@@ -1,23 +1,22 @@
 package main
 
 import (
-	"log"
-
 	"github.com/streadway/amqp"
 )
 
+//Mail structure
 type Mail struct {
 	Name string
 	Mail string
 }
 
-func failOnError(err error, msg string) {
+/*func failOnError(err error, msg string) {
 	if err != nil {
 		log.Fatalf("%s: %s", msg, err)
 	}
-}
+}*/
 
-func sendMailMessages(dataFile []byte) {
+func sendEmailChannel(dataFile []byte) {
 	conn, err := amqp.Dial(rabbitServer)
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -27,12 +26,12 @@ func sendMailMessages(dataFile []byte) {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		mailRequestQueue, // name
-		true,             // durable
-		false,            // delete when unused
-		false,            // exclusive
-		false,            // no-wait
-		nil,              // arguments
+		emailRequestQueue, // name
+		true,              // durable
+		false,             // delete when unused
+		false,             // exclusive
+		false,             // no-wait
+		nil,               // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 	err = ch.Publish(

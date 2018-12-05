@@ -7,13 +7,15 @@ import (
 	"github.com/streadway/amqp"
 )
 
+//ConfirmationQueue structure
 type ConfirmationQueue struct {
 	Type    string
 	Message string
-	Event string
+	Event   string
 }
 
-type EmailMessage  struct {
+//EmailMessage structure
+type EmailMessage struct {
 	Users []User
 	Event string
 }
@@ -58,7 +60,7 @@ func receiverFileMessageStorage() {
 			if confirmation.Type != "error" {
 				users := getUsers()
 
-				var emailsMessages   EmailMessage
+				var emailsMessages EmailMessage
 				emailsMessages.Event = confirmation.Event
 				emailsMessages.Users = users
 				documentJSON, err := json.Marshal(emailsMessages)
@@ -66,7 +68,7 @@ func receiverFileMessageStorage() {
 					panic(err)
 				}
 
-				sendEmailMessage(documentJSON);
+				sendEmailMessage(documentJSON)
 			}
 			log.Println(confirmation.Type + " : " + confirmation.Message)
 			d.Ack(false)
@@ -77,7 +79,6 @@ func receiverFileMessageStorage() {
 	forever := make(chan bool)
 	<-forever
 }
-
 
 func receiverEmailMessage() {
 	conn, err := amqp.Dial(rabbitServer)
@@ -90,11 +91,11 @@ func receiverEmailMessage() {
 
 	q, err := ch.QueueDeclare(
 		emailResponseQueue, // name
-		true,                 // durable
-		false,                // delete when unused
-		false,                // exclusive
-		false,                // no-wait
-		nil,                  // arguments
+		true,               // durable
+		false,              // delete when unused
+		false,              // exclusive
+		false,              // no-wait
+		nil,                // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 
