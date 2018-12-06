@@ -19,7 +19,6 @@ type DocumentFile struct {
 	Type     string
 }
 
-
 func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 	req.ParseMultipartForm(32 << 20)
@@ -66,7 +65,7 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	//Encode JSON
-	id :=req.FormValue("id")
+	id := req.FormValue("id")
 	document := Document{
 		ID: id,
 	}
@@ -84,6 +83,7 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 		ID: i ,
 		Filename:user.Name,
 		Type: "delete",
+
 	})
 
 	if err != nil {

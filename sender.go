@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/streadway/amqp"
 	"log"
+
+	"github.com/streadway/amqp"
 )
 
 func failOnError(err error, msg string) {

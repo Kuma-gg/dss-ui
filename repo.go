@@ -119,7 +119,6 @@ func saveDocument(document Document) int {
 	}
 	var lastInsertId int
 	err = db.QueryRow("INSERT INTO documents ( name,size) values ( $1 , $2 ) returning id;", document.Name, strconv.FormatInt(document.Size, 10)).Scan(&lastInsertId)
-	fmt.Println("last inserted id =", lastInsertId)
 	db.Close()
 
 	return lastInsertId
@@ -147,7 +146,7 @@ func getUserById(id string) Document {
 	if err != nil {
 		panic(err)
 	}
-	query  := "SELECT id, name,size FROM documents where id = '" + id+"'"
+	query := "SELECT id, name,size FROM documents where id = '" + id + "'"
 	rows, err := db.Query(query)
 	if err != nil {
 		panic(err)
