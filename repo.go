@@ -112,20 +112,17 @@ func deleteUser(user User) bool {
 	return true
 }
 
-func saveDocument(document Document) bool {
+func saveDocument(document Document) int {
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
-	sqlStatement := fmt.Sprintf(`  INSERT INTO documents ( name,size)
-						VALUES ( '%s', %s)`, document.Name, strconv.FormatInt(document.Size, 10))
-	_, err = db.Exec(sqlStatement)
+	var lastInsertId int
+	err = db.QueryRow("INSERT INTO documents ( name,size) values ( $1 , $2 ) returning id;", document.Name, strconv.FormatInt(document.Size, 10)).Scan(&lastInsertId)
+	fmt.Println("last inserted id =", lastInsertId)
 	db.Close()
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-	return true
+
+	return lastInsertId
 }
 
 func deleteDocument(document Document) bool {

@@ -8,10 +8,11 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type DocumentFile struct {
-	ID       string
+	ID       int
 	Filename string
 	Bytes    []byte
 	Size     int64
@@ -33,26 +34,26 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 
-	ID := getMD5Checksum(buf.Bytes())
 	//Encode JSON
-	documentJSON, err := json.Marshal(DocumentFile{
-		ID:       ID,
-		Filename: handler.Filename,
-		Bytes:    buf.Bytes(),
-		Size:     handler.Size,
-		Type:     "create",
-	})
+
 	if err != nil {
 		panic(err)
 	}
 
 	//log.Print(documentJSON)
 	// save Document
-	saved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
-	if !saved {
+	id_saved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
+	if id_saved == 0{
 		log.Println("ERROR : create document")
 	}
 	// send queue  RabbitMQ
+	documentJSON, err := json.Marshal(DocumentFile{
+		ID:       id_saved,
+		Filename: handler.Filename,
+		Bytes:    buf.Bytes(),
+		Size:     handler.Size,
+		Type:     "create",
+	})
 	sendFileStorageMessage(documentJSON)
 	//Decode JSON
 	var documentNormal DocumentFile
@@ -77,9 +78,10 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 	log.Print(documentJSON)
 	// send command Rabbit
+	i, err := strconv.Atoi(id)
 	user:=getUserById(id)
 	comand, err := json.Marshal(DocumentFile{
-		ID: id  ,
+		ID: i ,
 		Filename:user.Name,
 		Type: "delete",
 	})
