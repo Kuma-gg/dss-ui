@@ -2,14 +2,13 @@ package main
 
 import (
 	"bytes"
-	"crypto/md5"
-	"encoding/hex"
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
 	"strconv"
 )
+
 
 type DocumentFile struct {
 	ID       int
@@ -78,7 +77,7 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	log.Print(documentJSON)
 	// send command Rabbit
 	i, err := strconv.Atoi(id)
-	user:=getUserById(id)
+	user:= getUserByID(id)
 	comand, err := json.Marshal(DocumentFile{
 		ID: i ,
 		Filename:user.Name,
@@ -103,8 +102,3 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
 
-func getMD5Checksum(content []byte) string {
-	hasher := md5.New()
-	hasher.Write(content)
-	return hex.EncodeToString(hasher.Sum(nil))
-}

@@ -7,6 +7,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
+//MailConfirmationQueue structure
 type MailConfirmationQueue struct {
 	Type    string
 	Message string
