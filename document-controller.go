@@ -11,6 +11,7 @@ import (
 	"strconv"
 )
 
+
 type DocumentFile struct {
 	ID       int
 	Filename string
@@ -77,8 +78,10 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	}
 	log.Print(documentJSON)
 	// send command Rabbit
+
 	i, err := strconv.Atoi(id)
 	user:=getUserById(id)
+
 	comand, err := json.Marshal(DocumentFile{
 		ID: i ,
 		Filename:user.Name,

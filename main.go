@@ -32,16 +32,14 @@ const (
 )
 
 func main() {
+
 	//RabbitMq server
 	rabbitServer = "amqp://guest:guest@localhost:5672"
 	storageRequestQueue = "storageRequestQueue"
 	storageResponseQueue = "storageResponseQueue"
-
-	//email
 	emailResponseQueue = "emailResponseQueue"
 	emailRequestQueue = "emailRequestQueue"
 
-	//
 	go receiverFileMessageStorage()
 	go receiverEmailMessage()
 
@@ -51,8 +49,7 @@ func main() {
 	router.HandleFunc("/user/delete", userDelete).Methods("POST")
 	router.HandleFunc("/document", documentSave).Methods("POST")
 	router.HandleFunc("/document/delete", documentDelete).Methods("POST")
-	//mailinggggggg
-	router.HandleFunc("/mail", notifyMail).Methods("POST")
+	router.HandleFunc("/mail", notifyMail).Methods("GET")
 
 	fs := http.FileServer(http.Dir("./public"))
 	router.PathPrefix("/js/").Handler(fs)

@@ -74,7 +74,8 @@
                                             <label for="email" class="white-text">Email</label>
                                         </div>
                                         <div class="input-field col s12">
-                                            <button type="submit" class="waves-effect waves-light btn" title="Register new user">Submit</button>
+                                            <button type="submit" class="waves-effect waves-light btn tooltipped"
+                                                data-position="top" data-tooltip="Register new user">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -101,8 +102,9 @@
                                                     <td>
                                                         <form action="/user/delete" method="POST">
                                                             <input type="hidden" name="id" value="{{.ID}}">
-                                                            <button type="submit" class="waves-effect waves-light btn red"
-                                                                title="Remove user {{.Name}}"><i class="material-icons">delete</i></button>
+                                                            <button type="submit" class="waves-effect waves-light btn red tooltipped"
+                                                                data-position="top" data-tooltip="Remove user {{.Name}}"><i
+                                                                    class="material-icons">delete</i></button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -128,7 +130,8 @@
                                             </div>
                                         </div>
                                         <div class="input-field col s12">
-                                            <button type="submit" class="waves-effect waves-light btn" title="Upload file">Submit</button>
+                                            <button type="submit" class="waves-effect waves-light btn tooltipped"
+                                                data-position="top" data-tooltip="Upload file">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -153,8 +156,9 @@
                                                     <td>
                                                         <form action="/document/delete" method="POST">
                                                             <input type="hidden" name="id" value="{{.ID}}">
-                                                            <button type="submit" class="waves-effect waves-light btn red"
-                                                                title="Remove document {{.Name}}"><i class="material-icons">delete</i></button>
+                                                            <button type="submit" class="waves-effect waves-light btn red tooltipped"
+                                                                data-position="top" data-tooltip="Remove document {{.Name}}"><i
+                                                                    class="material-icons">delete</i></button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -169,7 +173,11 @@
                 </div>
             </div>
         </div>
-        <br>
+    </div>
+    <div class="fixed-action-btn tooltipped" data-position="left" data-tooltip="Notify to all users">
+        <a href="/mail" id="floating-button" class="btn-floating btn-large teal darken-4">
+            <i class="large material-icons">send</i>
+        </a>
     </div>
 </body>
 <script src="/js/materialize.min.js"></script>

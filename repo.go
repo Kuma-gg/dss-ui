@@ -140,7 +140,7 @@ func deleteDocument(document Document) bool {
 	return true
 }
 
-func getUserById(id string) Document {
+func getUserByID(id string) Document {
 	var user Document
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
