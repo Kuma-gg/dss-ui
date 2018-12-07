@@ -86,8 +86,7 @@ func saveUser(user User) bool {
 	if err != nil {
 		panic(err)
 	}
-	sqlStatement := fmt.Sprintf(`  INSERT INTO users ( name,email, first_name, last_name)
-						VALUES ( '%s', '%s', '%sn', '%s')`, user.Name, user.Email, user.Firstname, user.Lastname)
+	sqlStatement := fmt.Sprintf(`INSERT INTO users (name, email, first_name, last_name)	VALUES ('%s', '%s', '%s', '%s')`, user.Name, user.Email, user.Firstname, user.Lastname)
 	_, err = db.Exec(sqlStatement)
 	db.Close()
 	if err != nil {
