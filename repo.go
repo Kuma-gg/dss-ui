@@ -116,11 +116,11 @@ func saveDocument(document Document) int {
 	if err != nil {
 		panic(err)
 	}
-	var lastInsertId int
-	err = db.QueryRow("INSERT INTO documents ( name,size) values ( $1 , $2 ) returning id;", document.Name, strconv.FormatInt(document.Size, 10)).Scan(&lastInsertId)
+	var lastInsertID int
+	err = db.QueryRow("INSERT INTO documents ( name,size) values ( $1 , $2 ) returning id;", document.Name, strconv.FormatInt(document.Size, 10)).Scan(&lastInsertID)
 	db.Close()
 
-	return lastInsertId
+	return lastInsertID
 }
 
 func deleteDocument(document Document) bool {

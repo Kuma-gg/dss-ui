@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-
+//DocumentFile structure
 type DocumentFile struct {
 	ID       int
 	Filename string
@@ -40,13 +40,13 @@ func documentSave(writer http.ResponseWriter, req *http.Request) {
 
 	//log.Print(documentJSON)
 	// save Document
-	id_saved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
-	if id_saved == 0{
+	idSaved := saveDocument(Document{Name: handler.Filename, Size: handler.Size})
+	if idSaved == 0 {
 		log.Println("ERROR : create document")
 	}
 	// send queue  RabbitMQ
 	documentJSON, err := json.Marshal(DocumentFile{
-		ID:       id_saved,
+		ID:       idSaved,
 		Filename: handler.Filename,
 		Bytes:    buf.Bytes(),
 		Size:     handler.Size,
@@ -77,12 +77,11 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	log.Print(documentJSON)
 	// send command Rabbit
 	i, err := strconv.Atoi(id)
-	user:= getUserByID(id)
+	user := getUserByID(id)
 	comand, err := json.Marshal(DocumentFile{
-		ID: i ,
-		Filename:user.Name,
-		Type: "delete",
-
+		ID:       i,
+		Filename: user.Name,
+		Type:     "delete",
 	})
 
 	if err != nil {
@@ -101,4 +100,3 @@ func documentDelete(writer http.ResponseWriter, req *http.Request) {
 	log.Print(documentNormal.ID)
 	http.Redirect(writer, req, "/", http.StatusMovedPermanently)
 }
-
