@@ -19,19 +19,19 @@ CREATE TABLE public.users
 (
   id integer NOT NULL DEFAULT
   nextval('users_id_sql'::_regclass),
-  name text NOT NULL
-  email character(50)
-  first_name character(50)
-  last_name character(50)
+  name text NOT NULL,
+  email character(50),
+  first_name character(50),
+  last_name character(50),
   CONSTRAINT users_pkey PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE public.documents
 (
   id integer NOT NULL DEFAULT
-  nextval('users_id_sql'::_regclass),
-  name character(50)
-  size integer 
+  nextval('documents_id_sql'::_regclass),
+  name character(50),
+  size integer,
   CONSTRAINT documents_pkey PRIMARY KEY(id)
 )
 ```
