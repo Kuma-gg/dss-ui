@@ -12,6 +12,29 @@ Just follow the instruction to copy and run the project.
 ### Prerequisites
 
 * Install Go from its page at https://golang.org/.
+* Install PostgreSQL from its page at https://www.postgresql.org/
+* Create a Database in PostgreSQL and run this script:
+```
+CREATE TABLE public.users
+(
+  id integer NOT NULL DEFAULT
+  nextval('users_id_sql'::_regclass),
+  name text NOT NULL
+  email character(50)
+  first_name character(50)
+  last_name character(50)
+  CONSTRAINT users_pkey PRIMARY KEY(id)
+)
+
+CREATE TABLE public.documents
+(
+  id integer NOT NULL DEFAULT
+  nextval('users_id_sql'::_regclass),
+  name character(50)
+  size integer 
+  CONSTRAINT documents_pkey PRIMARY KEY(id)
+)
+```
 
 ### Installing
 
