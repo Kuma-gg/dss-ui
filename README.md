@@ -58,4 +58,4 @@ Example:
 
 ### To Do
 * Test
-* Socket.io implementation to display message in UI
+* Socket.io implementation to display messages from Brokers in UI
