@@ -80,7 +80,7 @@ dep ensure -v
 * Configure RabbitMQ and Postgresql credentials in main.go file
 * Execute the http server:
 ```
-go run main.go connector-sql.go document-controller.go user-controller.go mailsender.go mailreciever.go receiver.go sender.go repo.go
+go run main.go connector-sql.go document-controller.go user-controller.go index-controller.go mailsender.go mailreciever.go receiver.go sender.go repo.go
 ```
 * Go to:[http://localhost:3000](http://localhost:3000)
 
