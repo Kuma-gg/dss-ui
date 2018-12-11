@@ -82,7 +82,7 @@ dep ensure -v
 ```
 go run main.go connector-sql.go document-controller.go user-controller.go index-controller.go mailsender.go mailreceiver.go receiver.go sender.go repo.go
 ```
-* Go to:[http://localhost:3000](http://localhost:3000)
+* Go to: [http://localhost:3000](http://localhost:3000)
 
 ### Output
 
